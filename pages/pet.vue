@@ -57,7 +57,7 @@
                         </div>
                         <div style="padding-top:10px">
                             <label class="typo__label">Gender</label>
-                            <multiselect @select="toggleSelected"  v-model="genderValue" deselect-label="" track-by="name" label="name" placeholder="Select one" :options="gender" :allow-empty="false">
+                            <multiselect @select="toggleSelectedGender"  v-model="genderValue" deselect-label="" track-by="name" label="name" placeholder="Select one" :options="gender" :allow-empty="false">
                                 <template slot="singleLabel" slot-scope="{ option }">{{ option.name }}</template>
                               </multiselect>
                         </div>
@@ -137,18 +137,25 @@ export default {
     });
   },
   methods: {
-    async submit() {
+    async submit({$store}) {
       await this.$axios
         .$post("http://pawbookserverapi.test/api/addpet", this.form)
-        .then(function(response) {
-          console.log(response);
+        .then((response) => {
+             this.form.name = '';
+             this.form.birthdate = '';
+             this.form.genderValue = null;
         })
         .catch(function(error) {
           console.log(error);
         });
+
+
     },
     toggleSelected(value, id) {
       this.form.breed = value.name;
+    },
+    toggleSelectedGender(value, id) {
+      this.form.gender = value.id;
     },
     onFilePicked(event) {
       const files = event.target.files;
