@@ -16,31 +16,14 @@
         <!-- list -->
         <div class="list segments-page">
             <div class="container">
-                <div class="content waves-effect waves-light-grey" style="width:100%">
+                <div class="content waves-effect waves-light-grey" v-for="pet in pets" :key="pet.id" style="width:100%">
                     <div class="list-img">
-                        <img src="https://www.petmd.com/sites/default/files/Acute-Dog-Diarrhea-47066074.jpg" alt="">
+                        <img :src="pet.image" alt="">
                     </div>
                     <div class="list-text">
-                        <h6>Franky</h6>
-                        <p>My happy dog</p>
-                    </div>
-                </div>
-                <div class="content waves-effect waves-light-grey" style="width:100%">
-                    <div class="list-img">
-                        <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/smartest-dog-breeds-1553287693.jpg?crop=0.671xw:1.00xh;0.167xw,0&resize=640:*" alt="">
-                    </div>
-                    <div class="list-text">
-                        <h6>Nikki</h6>
-                        <p>My bad dog</p>
-                    </div>
-                </div>
-                <div class="content waves-effect waves-light-grey" style="width:100%">
-                    <div class="list-img">
-                        <img src="https://www.washingtonpost.com/resizer/uwlkeOwC_3JqSUXeH8ZP81cHx3I=/arc-anglerfish-washpost-prod-washpost/public/HB4AT3D3IMI6TMPTWIZ74WAR54.jpg" alt="">
-                    </div>
-                    <div class="list-text">
-                        <h6>Sky</h6>
-                        <p>The Destroyer</p>
+                        <h6>{{ pet.name }}</h6>
+                        <p>Gender : {{ pet.gender }}</p>
+                        <p>Breed : {{ pet.breed }}</p>
                     </div>
                 </div>
             </div>
@@ -53,18 +36,24 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   middleware: ["auth"],
   data() {
-
+    return {
+      pets: [],
+    }
   },
-  async asyncData({ $axios }) {
+  async asyncData({ $axios }, $store) {
+    console.log(this.$store.getters.user)
+    let {data} = await $axios.$get("http://pawbookserverapi.test/api/getUserPet");
+    return { pets: data };
 
   },
   created() {
-
   },
   methods: {
+
   }
 };
 </script>

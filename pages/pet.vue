@@ -46,7 +46,7 @@
                 <div class="content-form b-shadow">
                   	<form @submit.prevent="submit">
                         <div class="input-field">
-                            <input v-model="form.name" type="text" id="name">
+                            <input v-model="form.name" type="text" id="name" autofocus>
                             <label for="name">Name</label>
                         </div>
                         <div>
@@ -90,7 +90,6 @@
             </div>
         </div>
         <!-- end reservation -->
-
     </div>
     <!-- end home login -->
 </template>
@@ -128,8 +127,14 @@ export default {
     };
   },
   async asyncData({ $axios }) {
+    
     let data = await $axios.$get("https://api.thedogapi.com/v1/breeds");
+    // let data2 = await $axios.$get("http://pawbookserverapi.test/api/getUserPet");
+        
+    // console.log(data2);
+
     return { breeds: data };
+
   },
   created() {
     this.breeds.forEach(item => {
@@ -142,13 +147,15 @@ export default {
         .$post("http://pawbookserverapi.test/api/addpet", this.form)
         .then((response) => {
              this.form.name = '';
+             this.form.image = null;
              this.form.birthdate = '';
-             this.form.genderValue = null;
+             this.form.description = '';
+             this.genderValue = null;
+             this.value = null;
         })
         .catch(function(error) {
           console.log(error);
         });
-
 
     },
     toggleSelected(value, id) {
