@@ -10,7 +10,6 @@ import 'vue-slider-component/dist-css/vue-slider-component.css'
 
 // import theme
 import 'vue-slider-component/theme/default.css'
-import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 Vue.component('VueSlider', VueSlider)
 
 Vue.component('multiselect', Multiselect);

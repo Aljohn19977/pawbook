@@ -51,7 +51,7 @@
 				<div class="row">
 					<div class="col s6">
 						<div class="contents">
-                            <button class="button button-custom waves-effect waves-light-grey button-blue button-full blue b-shadow"><i class="fa fa-pencil"></i>Write Post</button>
+                            <button @click.prevent="post" class="button button-custom waves-effect waves-light-grey button-blue button-full blue b-shadow"><i class="fa fa-pencil"></i>Write Post</button>
 						</div>
                     </div>
                     <div class="col s6">
@@ -309,6 +309,9 @@ export default {
         },
         async pet(){
            await this.$router.push('/pet')
+        },
+        async post(){
+           await this.$router.push('/post')
         }
     }
 

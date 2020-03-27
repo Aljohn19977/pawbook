@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from 'vuex'
 export default {
   middleware: ["auth"],
   data() {
@@ -44,9 +44,10 @@ export default {
       pets: [],
     }
   },
-  async asyncData({ $axios }, $store) {
-    console.log(this.$store.getters.user)
-    let {data} = await $axios.$get("http://pawbookserverapi.test/api/getUserPet");
+  async asyncData({ $axios,store }) {
+
+    // let {data} = await $axios.$get(`http://pawbookserverapi.test/api/getUserPet`);
+    let {data} = await $axios.$get(`http://pawbookserverapi.test/api/user/${store.getters.user.id}/pet_list`);
     return { pets: data };
 
   },
