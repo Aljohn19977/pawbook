@@ -10,6 +10,21 @@ import 'vue-slider-component/dist-css/vue-slider-component.css'
 
 // import theme
 import 'vue-slider-component/theme/default.css'
+import VueLazyload from 'vue-lazyload'
+import moment from 'moment'
+
+Vue.prototype.moment = moment
+
+// Vue.use(VueLazyload)
+
+// // or with options
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: '/images/lazy-loading.gif',
+  loading: '/images/lazy-loading.gif',
+  attempt: 1
+})
+
 Vue.component('VueSlider', VueSlider)
 
 Vue.component('multiselect', Multiselect);

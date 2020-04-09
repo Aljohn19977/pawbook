@@ -14,8 +14,13 @@
     "@nuxtjs/auth": "^4.9.0",
     "@nuxtjs/axios": "^5.9.5",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "moment": "^2.24.0",
     "nuxt": "^2.0.0",
     "vue-country-region-select": "^2.0.13",
+    "vue-lazyload": "^1.3.3",
+    "vue-loading-overlay": "^3.3.2",
+    "vue-luxon": "^0.7.0",
+    "vue-moments-ago": "^0.2.0",
     "vue-multiselect": "^2.1.6",
     "vue-slider-component": "^3.1.1",
     "vue2-datepicker": "^3.4.1"

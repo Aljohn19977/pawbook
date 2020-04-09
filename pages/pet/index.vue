@@ -5,9 +5,9 @@
             <div class="container">
                 <div class="content">
                     <h4>
-                        <router-link to="/" class="link-back">
+                        <a @click.prevent="back" class="link-back">
                             <i class="fa fa-arrow-left waves-effect waves-light-grey"></i>
-                        </router-link>
+                        </a>
                         My Pet</h4>
                 </div>
             </div>
@@ -16,9 +16,16 @@
         <!-- list -->
         <div class="list segments-page">
             <div class="container">
-                <div class="content waves-effect waves-light-grey" v-for="pet in pets" :key="pet.id" style="width:100%">
+                <div class="row">
+					<div class="col s12">
+						<div class="contents">
+                            <button @click.prevent="addpet" class="button button-custom waves-effect waves-light-grey button-green button-full green b-shadow"><i class="material-icons">add_box</i></button>
+						</div>
+                    </div>
+				</div>
+                <div class="content waves-effect waves-light-grey" v-for="pet in pets" :key="pet.id" style="width:100%" @click.prevent="petProfile(pet.id)">
                     <div class="list-img">
-                        <img :src="pet.image" alt="">
+                        <img v-lazy="pet.image" alt="">
                     </div>
                     <div class="list-text">
                         <h6>{{ pet.name }}</h6>
@@ -54,7 +61,15 @@ export default {
   created() {
   },
   methods: {
-
+    async addpet(){
+        await this.$router.push('/pet/add')
+    },
+    async petProfile(id){
+         await this.$router.push(`/pet/${id}`)
+    },
+    async back(){
+		 await this.$router.back()
+	}
   }
 };
 </script>

@@ -92,7 +92,7 @@
         },
         methods:{
             async submit(){
-                await this.$axios.$post("auth/register", this.form)
+                await this.$axios.$post("http://pawbookserverapi.test/api/auth/register", this.form)
                 await this.$auth.loginWith("local", {
                 data: {
                     email: this.form.email,
@@ -100,7 +100,7 @@
                 }
             })
 
-            this.$router.push('/profile')
+            this.$router.push('/')
             },
         }
     };

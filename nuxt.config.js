@@ -26,13 +26,13 @@ export default {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' },
     ],
     script: [
-      { src: 'js/jquery.min.js', body: true },
-      { src: 'js/materialize.min.js', body: true },
-      { src: 'js/lightbox.js', body: true },
-      { src: 'js/owl.carousel.min.js', body: true },
-      { src: 'js/animsition.min.js', body: true },
-      { src: 'js/animsition-custom.js', body: true },
-      { src: 'js/main.js', body: true },
+      { src: '/js/jquery.min.js', body: true },
+      { src: '/js/materialize.min.js', body: true },
+      { src: '/js/lightbox.js', body: true },
+      { src: '/js/owl.carousel.min.js', body: true },
+      { src: '/js/animsition.min.js', body: true },
+      { src: '/js/animsition-custom.js', body: true },
+      { src: '/js/main.js', body: true },
       ]
   },
   /*
@@ -49,7 +49,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-      "./plugins/mixins/user.js"
+      "./plugins/mixins/user.js",
   ],
   /*
   ** Nuxt.js dev-modules
@@ -104,5 +104,5 @@ export default {
     */
     extend (config, ctx) {
     }
-  }
+  },
 }

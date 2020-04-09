@@ -1,13 +1,16 @@
 <template>
     <div>
+        <loading :active.sync="isLoading" 
+        :can-cancel="false" 
+        :is-full-page="fullPage"></loading>
         <!-- navbar -->
         <div class="navbar navbar-pages">
             <div class="container">
                 <div class="content">
                     <h4>
-                        <router-link to="/" class="link-back">
+                        <a @click.prevent="back" class="link-back">
                             <i class="fa fa-arrow-left waves-effect waves-light-grey"></i>
-                        </router-link>
+                        </a>
                         Add Pet</h4>
                 </div>
             </div>
@@ -23,7 +26,7 @@
 							<h5>Pet Profile Picture</h5>
 						</div>
 						<div class="content">
-							<img src="images/profile.png" v-if="form.image == null" alt="">
+							<img src="/images/profile.png" v-if="form.image == null" alt="">
                             <img :src="form.image" v-else alt="">
 							<div class="button-upload">
 			
@@ -60,15 +63,20 @@
                             <multiselect @select="toggleSelectedGender"  v-model="genderValue" deselect-label="" track-by="name" label="name" placeholder="Select one" :options="gender" :allow-empty="false">
                                 <template slot="singleLabel" slot-scope="{ option }">{{ option.name }}</template>
                               </multiselect>
-                        </div>
+                        </div>          
                         <div class="input-field">
                             <date-picker type="date" v-model="form.birthdate" placeholder="Date of Birth" id="birthdate" style="min-width:100%;"></date-picker>
-                        </div>                                    
-                        <div class="input-field">
-                            <p style="padding-top:10px">Playful</p>
-                            <vue-slider v-model="range" id="range"/>
                         </div>
-                        <div class="input-field">
+                        <div style="padding-bottom:10px">
+                            <label class="typo__label">Personality Traits</label>
+                            <multiselect v-model="tag" tag-placeholder="Add this as new tag" placeholder="Search.. " label="name" track-by="id" :options="traits" :multiple="true" @remove="removeRange" @select="addRange" :max="5"></multiselect>
+                        </div>                                    
+                        <div class="input-field" v-for="k in form.traits" :key="k.id">
+                            <p style="padding-top:10px">{{k.name}}</p>
+                            <input v-model="k.attributes_id" type="text" id="attributes_id" hidden>
+                            <vue-slider v-model="k.value" id="range"/>
+                        </div>
+                        <!-- <div class="input-field">
                             <p>Intellegent</p>
                             <vue-slider v-model="range" id="range"/>
                         </div>
@@ -79,7 +87,7 @@
                         <div class="input-field">
                             <p>Protective</p>
                             <vue-slider v-model="range" id="range"/>
-                        </div>
+                        </div> -->
                         <div class="input-field" style="margin-top:30px">
                             <textarea v-model="form.description" id="message" class="materialize-textarea" cols="30" rows="30"></textarea>
                             <label for="message">Description</label>
@@ -94,11 +102,18 @@
     <!-- end home login -->
 </template>
 
-<script>
+<script>   
+// Import component
+import Loading from 'vue-loading-overlay';
+// Import stylesheet
+import 'vue-loading-overlay/dist/vue-loading.css';
+
 export default {
   middleware: ["auth"],
   data() {
-    return {
+    return {   
+      isLoading: false,
+      fullPage: true,    
       form: {
         birthdate: "",
         image: null,
@@ -106,43 +121,66 @@ export default {
         gender: "",
         description: "",
         breed: "",
-        user_id: this.$store.getters.user.id
+        user_id: this.$store.getters.user.id,
+        traits: [], 
       },
+      tag:null,
       breeds: [],
       test: [],
       gender: [
         {
           name: "Male",
-          id: "male"
+          id: "Male"
         },
         {
           name: "Female",
-          id: "female"
+          id: "Female"
         }
       ],
       options: [],
+      options2: [],
+      pets: [],
+      traits: [],
       value: null,
+      value2: null,
       genderValue: null,
-      range: 0
     };
   },
-  async asyncData({ $axios }) {
-    
-    let data = await $axios.$get("https://api.thedogapi.com/v1/breeds");
-    // let data2 = await $axios.$get("http://pawbookserverapi.test/api/getUserPet");
-        
-    // console.log(data2);
+  components: {
+      Loading
+  },
+  async asyncData({ $axios,store }) {
 
-    return { breeds: data };
+    let {data} = await $axios.$get(`http://pawbookserverapi.test/api/user/${store.getters.user.id}/pet_list`);
+    let data3 = await $axios.$get(`http://pawbookserverapi.test/api/traits`);   
+    let data2 = await $axios.$get("https://api.thedogapi.com/v1/breeds");
+
+    return { breeds: data2,pets: data,traits: data3.data };
 
   },
   created() {
     this.breeds.forEach(item => {
       this.options.push({ name: item.name, id: item.id });
     });
+    this.pets.forEach(item => {
+      this.options2.push({ name: item.name, id: item.id });
+    });
   },
   methods: {
-    async submit({$store}) {
+    addRange(actionName){
+        console.log(actionName.name);
+        this.form.traits.push({ name: actionName.name, id: actionName.id, value: 0 })
+    },
+    removeRange(actionName){
+        console.log(actionName.name);
+        this.form.traits = this.form.traits.filter(id => id.id !== actionName.id);
+        // this.traits.push({ name: actionName.name })
+    },
+    async back(){
+		await this.$router.back()
+	},      
+    async submit() {
+      this.isLoading = true;
       await this.$axios
         .$post("http://pawbookserverapi.test/api/addpet", this.form)
         .then((response) => {
@@ -151,7 +189,10 @@ export default {
              this.form.birthdate = '';
              this.form.description = '';
              this.genderValue = null;
+             this.tag = null;
+             this.form.traits = null;
              this.value = null;
+             this.isLoading = false;
         })
         .catch(function(error) {
           console.log(error);
