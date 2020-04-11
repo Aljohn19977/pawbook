@@ -138,7 +138,7 @@ export default {
             router.push('/login')
         }
         // let {data} = await $axios.$get(`http://pawbookserverapi.test/api/getUserPet`);
-		let {data} = await $axios.$get(`http://pawbookserverapi.test/api/post`);
+		let {data} = await $axios.$get(`https://peaceful-hamlet-52896.herokuapp.com/api/post`);
         return { posts: data };
 	},
     created(){

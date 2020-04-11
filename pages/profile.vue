@@ -152,8 +152,8 @@ export default {
 	async asyncData({ $axios,store }) {
 
 		// let {data} = await $axios.$get(`http://pawbookserverapi.test/api/getUserPet`);
-		let petCount = await $axios.$get(`http://pawbookserverapi.test/api/user/${store.getters.user.id}/pet_count`);
-		let {data} = await $axios.$get(`http://pawbookserverapi.test/api/post/${store.getters.user.id}`);
+		let petCount = await $axios.$get(`https://peaceful-hamlet-52896.herokuapp.com/api/user/${store.getters.user.id}/pet_count`);
+		let {data} = await $axios.$get(`https://peaceful-hamlet-52896.herokuapp.com/api/post/${store.getters.user.id}`);
 		return { 
 				 posts: data,
 				 pet_count: petCount 

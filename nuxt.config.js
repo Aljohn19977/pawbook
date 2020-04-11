@@ -78,17 +78,17 @@ export default {
       local : {
         endpoints: {
           login: {
-            url: "http://pawbookserverapi.test/api/auth/login",
+            url: "https://peaceful-hamlet-52896.herokuapp.com/api/auth/login",
             method: "post",
             propertyName: "meta.token"
           },
           user: {
-            url: "http://pawbookserverapi.test/api/auth/user",
+            url: "https://peaceful-hamlet-52896.herokuapp.com/api/auth/user",
             method: "get",
             propertyName: "data"
           },
           logout: {
-            url: "http://pawbookserverapi.test/api/auth/logout",
+            url: "https://peaceful-hamlet-52896.herokuapp.com/api/auth/logout",
             method: "post"
           }
         }

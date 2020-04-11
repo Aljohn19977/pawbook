@@ -107,7 +107,7 @@ export default {
   },
   async asyncData({ $axios, store }) {
     
-    let {data} = await $axios.$get(`http://pawbookserverapi.test/api/user/${store.getters.user.id}/pet_list`);
+    let {data} = await $axios.$get(`https://peaceful-hamlet-52896.herokuapp.com/api/user/${store.getters.user.id}/pet_list`);
     return { pets: data };
 
   },
