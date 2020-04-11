@@ -151,8 +151,8 @@ export default {
   },
   async asyncData({ $axios,store }) {
 
-    let {data} = await $axios.$get(`http://pawbookserverapi.test/api/user/${store.getters.user.id}/pet_list`);
-    let data3 = await $axios.$get(`http://pawbookserverapi.test/api/traits`);   
+    let {data} = await $axios.$get(`https://peaceful-hamlet-52896.herokuapp.com/api/user/${store.getters.user.id}/pet_list`);
+    let data3 = await $axios.$get(`https://peaceful-hamlet-52896.herokuapp.com/api/traits`);   
     let data2 = await $axios.$get("https://api.thedogapi.com/v1/breeds");
 
     return { breeds: data2,pets: data,traits: data3.data };
