@@ -123,7 +123,7 @@ export default {
     async submit() {
       this.isLoading = true;
       await this.$axios
-        .$post("http://pawbookserverapi.test/api/add_post", this.form)
+        .$post("https://peaceful-hamlet-52896.herokuapp.com/api/add_post", this.form)
         .then((response) => {
              this.form.content = '';
              this.form.image = null;
