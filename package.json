@@ -27,7 +27,7 @@
     "vue2-datepicker": "^3.4.1"
   },
   "devDependencies": {
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "sass-loader": "^8.0.2"
   }
 }
